@@ -139,6 +139,10 @@ class RecurringManager {
             return calendar.date(byAdding: .day, value: 14, to: date) ?? date
         case "Monthly":
             return calendar.date(byAdding: .month, value: 1, to: date) ?? date
+        case "Bi-Monthly":
+            return calendar.date(byAdding: .month, value: 2, to: date) ?? date
+        case "Quarterly":
+            return calendar.date(byAdding: .month, value: 3, to: date) ?? date
         case "Yearly":
             return calendar.date(byAdding: .year, value: 1, to: date) ?? date
         default:

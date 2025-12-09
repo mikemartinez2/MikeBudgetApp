@@ -215,7 +215,7 @@ struct AddBillSheet: View {
     @State private var frequency = "One-Time"
     @State private var paidWith = "Cash"
     
-    let frequencies = ["One-Time", "Weekly", "Bi-Weekly", "Monthly"]
+    let frequencies = ["One-Time", "Weekly", "Bi-Weekly", "Bi-Monthly", "Quarterly", "Monthly"]
     let paymentMethods = ["AMEX", "USAA", "Bonvoy", "Discover", "CapitalOne", "Chase", "Barclays", "Apple", "Cash"]
     
     // 2. Added this custom initializer to accept the date
@@ -295,7 +295,7 @@ struct EditBillView: View {
     
     @State private var showUpdateOptions = false
     
-    let frequencies = ["One-Time", "Weekly", "Bi-Weekly", "Monthly"]
+    let frequencies = ["One-Time", "Weekly", "Bi-Weekly", "Bi-Monthly", "Quarterly", "Monthly"]
     let paymentMethods = ["AMEX", "USAA", "Bonvoy", "Discover", "CapitalOne", "Chase", "Barclays", "Apple", "Cash"]
     
     var body: some View {
