@@ -199,6 +199,7 @@ struct BillsView: View {
             } else {
                 // Standard delete
                 modelContext.delete(bill)
+                NotificationManager.shared.scheduleNotifications(context: modelContext)
             }
         }
     }
@@ -273,6 +274,9 @@ struct AddBillSheet: View {
             let newBill = Bill(name: name, amount: amount, dueDate: dueDate, frequency: frequency, paidWith: paidWith)
             modelContext.insert(newBill)
         }
+        // Reschedule
+        try? modelContext.save() // Ensure ID is generated
+        NotificationManager.shared.scheduleNotifications(context: modelContext)
     }
 }
     
@@ -364,6 +368,9 @@ struct EditBillView: View {
         bill.frequency = frequency
         bill.paidWith = paidWith
         bill.isPaid = isPaid
+        
+        try? modelContext.save()
+        NotificationManager.shared.scheduleNotifications(context: modelContext)
         dismiss()
     }
     
@@ -405,7 +412,11 @@ struct EditBillView: View {
             // Shifting dates is complex. Let's stick to properties.
         }
         
+        
         dismiss()
+        
+        try? modelContext.save()
+        NotificationManager.shared.scheduleNotifications(context: modelContext)
     }
 }
 

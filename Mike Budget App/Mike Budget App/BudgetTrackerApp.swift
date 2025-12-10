@@ -39,6 +39,8 @@ struct BudgetTrackerApp: App {
                 .onAppear {
                     // Trigger recurring logic
                     RecurringManager.shared.processRecurringItems(context: sharedModelContainer.mainContext)
+                    // Schedule Notifications
+                    NotificationManager.shared.scheduleNotifications(context: sharedModelContainer.mainContext)
                 }
                 .preferredColorScheme(selectedScheme)
         }

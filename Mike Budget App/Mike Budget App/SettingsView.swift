@@ -5,6 +5,7 @@ import UserNotifications
 struct SettingsView: View {
     @AppStorage("userTheme") private var userTheme: String = "System"
     @AppStorage("notificationsEnabled") private var notificationsEnabled: Bool = false
+    @AppStorage("notificationTime") private var notificationTime: Double = 32400 // 9 AM default
     
     @Environment(\.modelContext) private var modelContext
     @Query var bills: [Bill]
@@ -30,13 +31,27 @@ struct SettingsView: View {
                 }
                 
                 // Section 2: Notifications
+                // Section 2: Notifications
                 Section("Notifications") {
                     Toggle("Enable Reminders", isOn: $notificationsEnabled)
                         .onChange(of: notificationsEnabled) { oldValue, newValue in
                             if newValue {
-                                requestNotificationPermission()
+                                NotificationManager.shared.requestPermission()
                             }
+                            // Reschedule immediately
+                            NotificationManager.shared.scheduleNotifications(context: modelContext)
                         }
+                    
+                    if notificationsEnabled {
+                        DatePicker("Alert Time", selection: Binding(
+                            get: { Date(timeIntervalSince1970: notificationTime) },
+                            set: { notificationTime = $0.timeIntervalSince1970 }
+                        ), displayedComponents: .hourAndMinute)
+                        .onChange(of: notificationTime) { _, _ in
+                             NotificationManager.shared.scheduleNotifications(context: modelContext)
+                        }
+                    }
+                    
                     Text("Allows the app to remind you of upcoming bills.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -77,15 +92,7 @@ struct SettingsView: View {
         }
     }
     
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                print("Notifications authorized")
-            } else if let error = error {
-                print("Notification error: \(error.localizedDescription)")
-            }
-        }
-    }
+    // requestPermission moved to Manager
     
     func wipeAllData() {
         // Delete all entities

@@ -186,6 +186,7 @@ struct DebtView: View {
                 showDeleteConfirmation = true
             } else {
                 modelContext.delete(debt)
+                NotificationManager.shared.scheduleNotifications(context: modelContext)
             }
         }
     }
@@ -266,6 +267,8 @@ struct AddDebtSheet: View {
                          let newDebt = Debt(name: name, totalBalance: totalBalance, minPayment: minPayment, dueDate: dueDate, frequency: frequency)
                          modelContext.insert(newDebt)
                     }
+                    try? modelContext.save()
+                    NotificationManager.shared.scheduleNotifications(context: modelContext)
                     dismiss()
                 }
             }
