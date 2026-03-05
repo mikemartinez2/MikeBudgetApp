@@ -14,8 +14,8 @@ struct IncomeView: View {
     @State private var showDeleteConfirmation = false
     
     var visibleIncomes: [Income] {
-        let calendar = Calendar.current
-        let today = Date()
+        _ = Calendar.current
+        _ = Date()
         // Logic: Show exactly the selected month
         let start = navState.selectedMonth.startOfMonth
         let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: start)!

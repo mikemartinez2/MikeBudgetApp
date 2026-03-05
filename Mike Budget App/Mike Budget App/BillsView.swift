@@ -17,8 +17,8 @@ struct BillsView: View {
     
     // --- 1. Filter Logic (View Logic) ---
     var visibleBills: [Bill] {
-        let calendar = Calendar.current
-        let today = Date()
+        _ = Calendar.current
+        _ = Date()
         
         // Logic: Show exactly the selected month
         // We use strict start/end range

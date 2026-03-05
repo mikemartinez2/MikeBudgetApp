@@ -37,8 +37,8 @@ struct DebtView: View {
     
     // Filter items based on how many months we have "expanded"
     var visibleDebts: [Debt] {
-        let calendar = Calendar.current
-        let today = Date()
+        _ = Calendar.current
+        _ = Date()
         // End date increases as we click "Show Next Month"
         // Logic: Show exactly the selected month
         let start = navState.selectedMonth.startOfMonth
